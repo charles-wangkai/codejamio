@@ -28,11 +28,11 @@ public class Solution {
     for (int i = 0; i < adjLists.length; ++i) {
       adjLists[i] = new ArrayList<>();
     }
-    for (int i = 0; i < N; i += 2) {
+    for (int i = 0; i + 1 < N; i += 2) {
       adjLists[i].add(i + 1);
       adjLists[i + 1].add(i);
     }
-    for (int i = 0; i < A.length; i += 2) {
+    for (int i = (N % 2 == 0) ? 0 : 1; i + 1 < A.length; i += 2) {
       adjLists[A[i] - 1].add(A[i + 1] - 1);
       adjLists[A[i + 1] - 1].add(A[i] - 1);
     }
