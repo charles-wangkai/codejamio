@@ -18,7 +18,7 @@ public class Solution {
         }
       }
 
-      System.out.println(String.format("Case #%d: %f", tc, solve(D)));
+      System.out.println(String.format("Case #%d: %.9f", tc, solve(D)));
     }
 
     sc.close();

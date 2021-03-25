@@ -13,7 +13,7 @@ public class Solution {
     for (int tc = 1; tc <= T; ++tc) {
       int N = sc.nextInt();
 
-      System.out.println(String.format("Case #%d: %f", tc, solve(N)));
+      System.out.println(String.format("Case #%d: %.9f", tc, solve(N)));
     }
 
     sc.close();

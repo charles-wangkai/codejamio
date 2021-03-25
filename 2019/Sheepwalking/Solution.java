@@ -14,7 +14,7 @@ public class Solution {
       int X = sc.nextInt();
       int Y = sc.nextInt();
 
-      System.out.println(String.format("Case #%d: %f", tc, solve(X, Y)));
+      System.out.println(String.format("Case #%d: %.9f", tc, solve(X, Y)));
     }
 
     sc.close();

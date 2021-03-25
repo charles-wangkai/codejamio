@@ -14,7 +14,7 @@ public class Solution {
         P[i] = sc.nextDouble();
       }
 
-      System.out.println(String.format("Case #%d: %f", tc, solve(P)));
+      System.out.println(String.format("Case #%d: %.9f", tc, solve(P)));
     }
 
     sc.close();
