@@ -32,39 +32,36 @@ public class Solution {
   }
 
   static String solve(int M, int N, char[][] C, int[] A, int[] B) {
-    return IntStream.range(0, A.length)
-        .mapToObj(i -> String.valueOf(computeMinTime(M, N, C, A[i], B[i])))
-        .collect(Collectors.joining(" "));
-  }
-
-  static int computeMinTime(int M, int N, char[][] C, int a, int b) {
-    int minTime = search(M, N, a, b, C, 0);
-
-    return (minTime == Integer.MAX_VALUE) ? -1 : minTime;
-  }
-
-  static int search(int M, int N, int a, int b, char[][] C, int time) {
-    if (C[a][b] == 'Y') {
-      return time;
+    int[][] distances = new int[M + N][M + N];
+    for (int i = 0; i < distances.length; ++i) {
+      for (int j = 0; j < distances[i].length; ++j) {
+        distances[i][j] = (i == j) ? 0 : ((C[i][j] == 'Y') ? 1 : Integer.MAX_VALUE);
+      }
     }
 
-    int result = Integer.MAX_VALUE;
     for (int k = 0; k < M; ++k) {
       for (int i = 0; i < M + N; ++i) {
-        for (int j = i + 1; j < M + N; ++j) {
-          if (C[i][j] == 'N' && C[i][k] == 'Y' && C[j][k] == 'Y') {
-            C[i][j] = 'Y';
-            C[j][i] = 'Y';
-
-            result = Math.min(result, search(M, N, a, b, C, time + 1));
-
-            C[i][j] = 'N';
-            C[j][i] = 'N';
+        for (int j = 0; j < M + N; ++j) {
+          if (distances[i][k] != Integer.MAX_VALUE && distances[k][j] != Integer.MAX_VALUE) {
+            distances[i][j] = Math.min(distances[i][j], distances[i][k] + distances[k][j]);
           }
         }
       }
     }
 
-    return result;
+    return IntStream.range(0, A.length)
+        .mapToObj(
+            i ->
+                String.valueOf(
+                    (distances[A[i]][B[i]] == Integer.MAX_VALUE) ? -1 : f(distances[A[i]][B[i]])))
+        .collect(Collectors.joining(" "));
+  }
+
+  static int f(int x) {
+    if (x <= 1) {
+      return 0;
+    }
+
+    return 1 + f(x - (x + 1) / 3);
   }
 }
