@@ -7,7 +7,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class Solution {
+public class Main {
   public static void main(String[] args) {
     Scanner sc = new Scanner(System.in);
 
@@ -83,14 +83,8 @@ public class Solution {
         lasts.add(c);
       }
     }
-    if (lasts.size() >= 2) {
-      return false;
-    }
 
-    if (!firsts.isEmpty() && !lasts.isEmpty() && firsts.get(0).equals(lasts.get(0))) {
-      return false;
-    }
-
-    return true;
+    return lasts.size() < 2
+        && (firsts.isEmpty() || lasts.isEmpty() || !firsts.get(0).equals(lasts.get(0)));
   }
 }
