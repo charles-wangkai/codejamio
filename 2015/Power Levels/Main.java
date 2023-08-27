@@ -1,7 +1,7 @@
 import java.math.BigInteger;
 import java.util.Scanner;
 
-public class Solution {
+public class Main {
   static final int N = 9000;
 
   static int[] digitNums;
