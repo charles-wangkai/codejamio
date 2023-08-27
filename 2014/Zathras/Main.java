@@ -3,7 +3,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Scanner;
 
-public class Solution {
+public class Main {
   public static void main(String[] args) {
     Scanner sc = new Scanner(System.in);
 
@@ -25,7 +25,8 @@ public class Solution {
     Map<State, Integer> stateToIndex = new HashMap<>();
     stateToIndex.put(new State(A, B), 0);
 
-    for (long i = Y - 1; i >= 0; --i) {
+    long restYear = Y - 1;
+    while (restYear >= 0) {
       int offspring = Math.min(A, B) * 2 / 100;
       int aBorn = offspring * alpha / 100;
       int bBorn = offspring * beta / 100;
@@ -38,10 +39,12 @@ public class Solution {
 
       State state = new State(A, B);
       if (stateToIndex.containsKey(state)) {
-        i %= stateToIndex.size() - stateToIndex.get(state);
+        restYear %= stateToIndex.size() - stateToIndex.get(state);
       } else {
         stateToIndex.put(state, stateToIndex.size());
       }
+
+      --restYear;
     }
 
     return String.format("%d %d", A, B);
