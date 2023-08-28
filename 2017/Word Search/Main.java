@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
-public class Solution {
+public class Main {
   static final int SIZE = 15;
 
   public static void main(String[] args) {
