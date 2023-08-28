@@ -3,7 +3,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Scanner;
 
-public class Solution {
+public class Main {
   static Map<State, Double> cache = new HashMap<>();
 
   public static void main(String[] args) {
