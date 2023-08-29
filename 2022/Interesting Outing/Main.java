@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class Solution {
+public class Main {
   public static void main(String[] args) {
     Scanner sc = new Scanner(System.in);
 
@@ -39,55 +39,23 @@ public class Solution {
 
     long result = Long.MAX_VALUE;
     for (int root = 0; root < N; ++root) {
-      result =
-          Math.min(
-              result, search(A, B, C, buildChildLists(edgeLists, A, B, root), root).nonReturnCost);
+      result = Math.min(result, search(A, B, C, edgeLists, -1, root).nonReturnCost);
     }
 
     return result;
   }
 
-  static List<Integer>[] buildChildLists(List<Integer>[] edgeLists, int[] A, int[] B, int root) {
-    int N = edgeLists.length;
-
-    @SuppressWarnings("unchecked")
-    List<Integer>[] childLists = new List[N];
-    for (int i = 0; i < childLists.length; ++i) {
-      childLists[i] = new ArrayList<>();
-    }
-
-    build(childLists, edgeLists, A, B, new boolean[N], root);
-
-    return childLists;
-  }
-
-  static void build(
-      List<Integer>[] childLists,
-      List<Integer>[] edgeLists,
-      int[] A,
-      int[] B,
-      boolean[] visited,
-      int node) {
-    visited[node] = true;
-
-    for (int edge : edgeLists[node]) {
-      int other = (A[edge] == node) ? B[edge] : A[edge];
-      if (!visited[other]) {
-        childLists[node].add(edge);
-        build(childLists, edgeLists, A, B, visited, other);
-      }
-    }
-  }
-
-  static Outcome search(int[] A, int[] B, int[] C, List<Integer>[] childLists, int node) {
+  static Outcome search(
+      int[] A, int[] B, int[] C, List<Integer>[] edgeLists, int parent, int node) {
     long returnCost = 0;
     long minDelta = Long.MAX_VALUE;
-    for (int child : childLists[node]) {
-      int other = (A[child] == node) ? B[child] : A[child];
-
-      Outcome subResult = search(A, B, C, childLists, other);
-      returnCost += 2 * C[child] + subResult.returnCost;
-      minDelta = Math.min(minDelta, -C[child] - subResult.returnCost + subResult.nonReturnCost);
+    for (int edge : edgeLists[node]) {
+      int other = (A[edge] == node) ? B[edge] : A[edge];
+      if (other != parent) {
+        Outcome subResult = search(A, B, C, edgeLists, node, other);
+        returnCost += 2 * C[edge] + subResult.returnCost;
+        minDelta = Math.min(minDelta, -C[edge] - subResult.returnCost + subResult.nonReturnCost);
+      }
     }
 
     long nonReturnCost = returnCost + ((minDelta == Long.MAX_VALUE) ? 0 : minDelta);
